@@ -1,6 +1,8 @@
 package ru.netology.web.page;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
+import org.openqa.selenium.Keys;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
@@ -12,23 +14,36 @@ public class MoneyTransferPage {
     private SelenideElement to = $$("[type=\"text\"]").last();
     private SelenideElement transferButton = $("[data-test-id=\"action-transfer\"]");
     private SelenideElement cancelButton = $("[data-test-id=\"action-cancel\"]");
+    private SelenideElement errorPopUp = $("[data-test-id=\"error-notification\"]");
 
-    String firstCard = "5559 0000 0000 0001";
-    String secondCard = "5559 0000 0000 0002";
+    public MoneyTransferPage() {
+        heading.shouldBe(Condition.visible);
+    }
 
-    public DashboardPage moneyTransferFrom2To1 (String amountOfTransfer){
-        //todo убедиться что тут стринг в аргументе
+    public void moneyTransfer(String amountOfTransfer, String fromCard) {
+        sum.sendKeys(Keys.CONTROL, "A", Keys.DELETE);
         sum.setValue(amountOfTransfer);
-        from.setValue(secondCard);
+        from.sendKeys(Keys.CONTROL, "A", Keys.DELETE);
+        from.setValue(fromCard);
         transferButton.click();
+    }
+
+    public DashboardPage moneyTransferSuccess(String amountOfTransfer, String fromCard){
+        moneyTransfer(amountOfTransfer, fromCard);
         return new DashboardPage();
     }
 
-    public DashboardPage moneyTransferFrom1To2 (String amountOfTransfer){
-        //todo убедиться что тут стринг
+    public void moneyTransferFailure(String amountOfTransfer, String fromCard) {
+        sum.sendKeys(Keys.CONTROL, "A", Keys.DELETE);
         sum.setValue(amountOfTransfer);
-        from.setValue(firstCard);
+        from.sendKeys(Keys.CONTROL, "A", Keys.DELETE);
+        from.setValue(fromCard);
         transferButton.click();
+        errorPopUp.shouldBe(Condition.visible);
+    }
+
+    public DashboardPage cancelation() {
+        cancelButton.click();
         return new DashboardPage();
     }
 }
