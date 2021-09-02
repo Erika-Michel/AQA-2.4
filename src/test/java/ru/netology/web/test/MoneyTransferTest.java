@@ -38,7 +38,7 @@ class MoneyTransferTest {
         }
         if (dashboardPage.getSecondCardBalance() < 10_000) {
             int ii = dashboardPage.getFirstCardBalance() - 10_000;
-           moneyTransferPage = dashboardPage.transferToSecondCard();
+            moneyTransferPage = dashboardPage.transferToSecondCard();
             moneyTransferPage.moneyTransferSuccess(Integer.toString(ii), firstCard);
         }
 

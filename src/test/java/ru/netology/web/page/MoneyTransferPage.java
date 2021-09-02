@@ -28,7 +28,7 @@ public class MoneyTransferPage {
         transferButton.click();
     }
 
-    public DashboardPage moneyTransferSuccess(String amountOfTransfer, String fromCard){
+    public DashboardPage moneyTransferSuccess(String amountOfTransfer, String fromCard) {
         moneyTransfer(amountOfTransfer, fromCard);
         return new DashboardPage();
     }
